@@ -156,7 +156,7 @@ export default function Home() {
 
       {/* 5. HORIZONTAL DIGITAL JOURNEY */}
       <section ref={horizontalRef} style={{ height: '400vh', position: 'relative', borderTop: '1px solid var(--border)' }}>
-        <div style={{ position: 'sticky', top: navHeight, height: `calc(100vh - ${navHeight}px)`, overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ position: 'sticky', top: `${navHeight}px`, height: `calc(100vh - ${navHeight}px)`, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div style={{ padding: '0 10vw', marginBottom: '4rem' }}>
              <h2 style={{ fontSize: '3rem' }}>From idea to intelligent system.</h2>
           </div>

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ role: 'user' | 'ai', content: string }[]>([]);
+  const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -28,18 +28,18 @@ export default function AIAssistant() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history: messages })
+        body: JSON.stringify({ message: text, conversation: messages })
       });
       
       const data = await response.json();
       
-      if (response.ok) {
-        setMessages(prev => [...prev, { role: 'ai', content: data.reply }]);
+      if (response.ok && data.success) {
+        setMessages(prev => [...prev, { role: 'assistant', content: data.message }]);
       } else {
-        setMessages(prev => [...prev, { role: 'ai', content: "I'm having trouble connecting right now. You can still tell us about your project through the contact form." }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: "I’m having trouble connecting right now. Please try again in a moment or start a project through our contact form." }]);
       }
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'ai', content: "I'm having trouble connecting right now. You can still tell us about your project through the contact form." }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: "I’m having trouble connecting right now. Please try again in a moment or start a project through our contact form." }]);
     }
     
     setIsLoading(false);
@@ -83,7 +83,7 @@ export default function AIAssistant() {
                 <h3 style={{ fontSize: '1.2rem', margin: 0, fontFamily: 'var(--font-heading)' }}>NEXORA AI</h3>
                 <p style={{ fontSize: '0.8rem', color: 'var(--secondary)', margin: 0 }}>Your AI guide to digital transformation.</p>
               </div>
-              <button onClick={() => setIsOpen(false)} style={{ color: 'var(--secondary)', fontSize: '1.5rem', padding: '0.5rem' }}>×</button>
+              <button onClick={() => setIsOpen(false)} style={{ color: 'var(--secondary)', fontSize: '1.5rem', padding: '0.5rem', background: 'transparent', border: 'none', cursor: 'pointer' }}>×</button>
             </div>
 
             {/* Messages */}
@@ -94,7 +94,7 @@ export default function AIAssistant() {
                     <button key={i} onClick={() => handleSend(prompt)} style={{
                       textAlign: 'left', padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.05)',
                       border: '1px solid var(--border)', borderRadius: '12px', fontSize: '0.9rem',
-                      color: 'var(--foreground)', transition: 'background 0.2s'
+                      color: 'var(--foreground)', transition: 'background 0.2s', cursor: 'pointer'
                     }}>
                       {prompt}
                     </button>
@@ -111,9 +111,15 @@ export default function AIAssistant() {
                     color: msg.role === 'user' ? 'var(--background)' : 'var(--foreground)',
                     border: msg.role === 'user' ? 'none' : '1px solid var(--border)',
                     fontSize: '0.95rem',
-                    lineHeight: '1.5'
+                    lineHeight: '1.5',
+                    whiteSpace: 'pre-wrap'
                   }}>
                     {msg.content}
+                    {msg.role === 'assistant' && msg.content.includes('form') && (
+                      <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ marginTop: '0.8rem', display: 'block', background: 'var(--primary)', color: 'var(--background)', padding: '0.5rem 1rem', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 600 }}>
+                        Start a Project
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -145,7 +151,8 @@ export default function AIAssistant() {
                 />
                 <button onClick={() => handleSend(input)} style={{
                   background: 'var(--primary)', color: 'var(--background)', width: '45px', height: '45px',
-                  borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', border: 'none'
                 }}>
                   ↑
                 </button>
@@ -154,6 +161,13 @@ export default function AIAssistant() {
           </motion.div>
         )}
       </AnimatePresence>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes blink {
+          0% { opacity: 0.2; }
+          20% { opacity: 1; }
+          100% { opacity: 0.2; }
+        }
+      `}} />
     </>
   );
 }

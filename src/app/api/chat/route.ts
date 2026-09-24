@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
 const SYSTEM_INSTRUCTION = `NEXORA AI ASSISTANT — APPROVED RESPONSE SYSTEM
 
 IMPORTANT:
@@ -414,16 +412,17 @@ If the information is not in the knowledge base, Say:
 
 export async function POST(req: Request) {
   try {
-    const { message, history } = await req.json();
+    const { message, conversation } = await req.json();
 
     if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ 
-        reply: "I am currently running in offline mode. Please configure the GEMINI_API_KEY in the backend to enable my full capabilities. You can still reach us through the contact form!" 
-      });
+      console.error('SERVER CONFIGURATION ERROR: GEMINI_API_KEY environment variable is not set. Please add it to the backend environment.');
+      return NextResponse.json({ success: false, error: 'Configuration Error' }, { status: 500 });
     }
 
-    const contents = history.map((msg: any) => ({
-      role: msg.role === 'ai' ? 'model' : 'user',
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+    const contents = (conversation || []).map((msg: any) => ({
+      role: msg.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: msg.content }]
     }));
     
@@ -434,13 +433,17 @@ export async function POST(req: Request) {
         contents: contents,
         config: {
             systemInstruction: SYSTEM_INSTRUCTION,
-            temperature: 0.2 // Lower temperature for more consistent, approved responses
+            temperature: 0.2
         }
     });
 
-    return NextResponse.json({ reply: response.text });
+    if (!response || !response.text) {
+      throw new Error("Invalid response from Gemini API");
+    }
+
+    return NextResponse.json({ success: true, message: response.text });
   } catch (error) {
     console.error('AI Chat Error:', error);
-    return NextResponse.json({ error: 'Failed to process request' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Failed to process request' }, { status: 500 });
   }
 }

@@ -31,7 +31,7 @@ export default function Home() {
   // 2. Horizontal Scroll (Moved down)
   const horizontalRef = useRef(null);
   const { scrollYProgress: horizontalScroll } = useScroll({ target: horizontalRef, offset: ["start start", "end end"] });
-  const horizontalX = useTransform(horizontalScroll, [0, 1], ["0%", "calc(-100% + 100vw)"]);
+  const horizontalX = useTransform(horizontalScroll, [0, 1], ["0%", "-75%"]);
 
   // 4. Pinned AI Workflow
   const workflowRef = useRef(null);
@@ -160,7 +160,7 @@ export default function Home() {
           <div style={{ padding: '0 10vw', marginBottom: '4rem' }}>
              <h2 style={{ fontSize: '3rem' }}>From idea to intelligent system.</h2>
           </div>
-          <motion.div style={{ x: horizontalX, display: 'flex', gap: '5rem', padding: '0 10vw', width: 'max-content' }}>
+          <motion.div style={{ x: horizontalX, display: 'flex', flexWrap: 'nowrap', gap: '5rem', padding: '0 10vw', width: 'max-content' }}>
             {[
               { num: '01', title: 'IDEA', desc: 'Understand the business problem.' },
               { num: '02', title: 'DESIGN', desc: 'Create the right digital experience.' },
@@ -170,7 +170,7 @@ export default function Home() {
               { num: '06', title: 'AUTOMATE', desc: 'Turn repetitive workflows into systems.' },
               { num: '07', title: 'LAUNCH', desc: 'Deploy and continuously improve.' }
             ].map((card, i) => (
-              <div key={i} className="glass-panel" style={{ minWidth: '40vw', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '3rem' }}>
+              <div key={i} className="glass-panel" style={{ flex: '0 0 40vw', width: '40vw', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '3rem' }}>
                 <span style={{ fontSize: '1.2rem', color: 'var(--accent)', marginBottom: '1rem' }}>{card.num}</span>
                 <h3 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem' }}>{card.title}</h3>
                 <p style={{ fontSize: '1.2rem', color: 'var(--secondary)' }}>{card.desc}</p>

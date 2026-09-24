@@ -160,7 +160,7 @@ export default function Home() {
           <div style={{ padding: '0 10vw', marginBottom: '4rem' }}>
              <h2 style={{ fontSize: '3rem' }}>From idea to intelligent system.</h2>
           </div>
-          <motion.div style={{ x: horizontalX, display: 'flex', gap: '5rem', padding: '0 10vw' }}>
+          <motion.div style={{ x: horizontalX, display: 'flex', gap: '5rem', padding: '0 10vw', width: 'max-content' }}>
             {[
               { num: '01', title: 'IDEA', desc: 'Understand the business problem.' },
               { num: '02', title: 'DESIGN', desc: 'Create the right digital experience.' },

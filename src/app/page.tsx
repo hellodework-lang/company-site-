@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import Navigation from '@/components/Navigation';
 import AIAssistant from '@/components/AIAssistant';
+import AnimationDemos from '@/components/AnimationDemos';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -280,6 +281,8 @@ export default function Home() {
             </form>
          </div>
       </section>
+
+      <AnimationDemos />
 
       {/* Footer */}
       <footer style={{ borderTop: '1px solid var(--border)', padding: '4rem 5%', background: 'var(--background)' }}>

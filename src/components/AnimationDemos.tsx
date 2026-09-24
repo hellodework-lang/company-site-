@@ -2,19 +2,16 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import Navigation from '@/components/Navigation';
 
-export default function AnimationsDemo() {
+export default function AnimationDemos() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
-  // For Animation 5: Parallax
   const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   
-  // For Animation 9: Horizontal Scroll
   const horizontalRef = useRef(null);
   const { scrollYProgress: horizontalScrollProgress } = useScroll({
     target: horizontalRef,
@@ -22,7 +19,6 @@ export default function AnimationsDemo() {
   });
   const xTransform = useTransform(horizontalScrollProgress, [0, 1], ["0%", "-75%"]);
 
-  // For Animation 10: Background Color Change
   const bgRef = useRef(null);
   const { scrollYProgress: bgScrollProgress } = useScroll({
     target: bgRef,
@@ -31,16 +27,14 @@ export default function AnimationsDemo() {
   const backgroundColor = useTransform(
     bgScrollProgress,
     [0, 0.5, 1],
-    ["var(--background)", "#1e1e1e", "var(--background)"]
+    ["var(--background)", "#0a0a0a", "var(--background)"]
   );
 
   return (
-    <main style={{ overflowX: 'hidden' }}>
-      <Navigation />
-      
-      <div style={{ paddingTop: '150px', paddingBottom: '50px', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '4rem', fontFamily: 'var(--font-heading)' }}>10 Scrolling Animations</h1>
-        <p style={{ color: 'var(--secondary)' }}>Scroll down to view different animation techniques.</p>
+    <div id="animation-demos" style={{ borderTop: '1px solid var(--border)', paddingTop: '4rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+        <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-heading)' }}>Interactive Animations Demo</h2>
+        <p style={{ color: 'var(--secondary)' }}>Scroll down to view different premium animation techniques integrated into this page.</p>
       </div>
 
       <div ref={containerRef} style={{ display: 'flex', flexDirection: 'column', gap: '150px', paddingBottom: '150px' }}>
@@ -54,7 +48,7 @@ export default function AnimationsDemo() {
             transition={{ duration: 0.8 }}
             className="glass-panel"
           >
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>01. Fade Up Reveal</h2>
+            <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>01. Fade Up Reveal</h3>
             <p style={{ color: 'var(--secondary)' }}>A smooth fade and upward slide as the element enters the viewport.</p>
           </motion.div>
         </section>
@@ -69,7 +63,7 @@ export default function AnimationsDemo() {
             className="glass-panel"
             style={{ border: '1px solid var(--accent)' }}
           >
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>02. Spring Scale In</h2>
+            <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>02. Spring Scale In</h3>
             <p style={{ color: 'var(--secondary)' }}>Element scales up from 80% to 100% with a slight spring effect.</p>
           </motion.div>
         </section>
@@ -83,7 +77,7 @@ export default function AnimationsDemo() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="glass-panel"
           >
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>03. Slide In From Left</h2>
+            <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>03. Slide In From Left</h3>
             <p style={{ color: 'var(--secondary)' }}>Draws attention from the left side of the screen.</p>
           </motion.div>
         </section>
@@ -98,7 +92,7 @@ export default function AnimationsDemo() {
             className="glass-panel"
             style={{ marginLeft: 'auto', maxWidth: '800px' }}
           >
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>04. Slide In From Right</h2>
+            <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>04. Slide In From Right</h3>
             <p style={{ color: 'var(--secondary)' }}>Draws attention from the right side of the screen.</p>
           </motion.div>
         </section>
@@ -108,19 +102,19 @@ export default function AnimationsDemo() {
           <motion.div 
             style={{ 
               position: 'absolute', top: '-20%', left: 0, right: 0, bottom: '-20%',
-              background: 'linear-gradient(45deg, #121212 0%, #2563eb 100%)',
+              background: 'linear-gradient(45deg, #050505 0%, #2563eb 100%)',
               y: parallaxY
             }} 
           />
           <div style={{ position: 'relative', zIndex: 1, padding: '4rem', color: '#fff', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h2 style={{ fontSize: '3rem', marginBottom: '1rem' }}>05. Parallax Depth</h2>
+            <h3 style={{ fontSize: '3rem', marginBottom: '1rem' }}>05. Parallax Depth</h3>
             <p style={{ fontSize: '1.2rem', maxWidth: '500px' }}>Background moves at a different speed than the foreground content, creating a sense of 3D depth.</p>
           </div>
         </section>
 
         {/* 6. Staggered List */}
         <section className="container">
-          <h2 style={{ fontSize: '2rem', marginBottom: '2rem' }}>06. Staggered Item Reveal</h2>
+          <h3 style={{ fontSize: '2rem', marginBottom: '2rem' }}>06. Staggered Item Reveal</h3>
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -129,7 +123,7 @@ export default function AnimationsDemo() {
               hidden: { opacity: 0 },
               visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
             }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}
           >
             {[1, 2, 3].map(i => (
               <motion.div 
@@ -140,7 +134,7 @@ export default function AnimationsDemo() {
                 }}
                 className="glass-panel"
               >
-                <h3>Item 0{i}</h3>
+                <h4>Item 0{i}</h4>
               </motion.div>
             ))}
           </motion.div>
@@ -149,7 +143,7 @@ export default function AnimationsDemo() {
         {/* 7. Text Mask Reveal */}
         <section className="container">
           <div style={{ overflow: 'hidden' }}>
-            <motion.h2
+            <motion.h3
               initial={{ y: "100%" }}
               whileInView={{ y: "0%" }}
               viewport={{ once: true }}
@@ -157,7 +151,7 @@ export default function AnimationsDemo() {
               style={{ fontSize: '4rem', fontFamily: 'var(--font-heading)' }}
             >
               07. Masked Text Reveal
-            </motion.h2>
+            </motion.h3>
           </div>
           <p style={{ color: 'var(--secondary)' }}>Text smoothly slides up from behind an invisible mask.</p>
         </section>
@@ -172,7 +166,7 @@ export default function AnimationsDemo() {
             className="glass-panel"
             style={{ perspective: '1000px', transformOrigin: 'top' }}
           >
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>08. 3D Flip In</h2>
+            <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>08. 3D Flip In</h3>
             <p style={{ color: 'var(--secondary)' }}>Element rotates into view using 3D transforms.</p>
           </motion.div>
         </section>
@@ -184,12 +178,12 @@ export default function AnimationsDemo() {
         <div style={{ position: 'sticky', top: '150px', height: '400px', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
           <motion.div style={{ x: xTransform, display: 'flex', gap: '4rem', padding: '0 5%' }}>
             <div style={{ minWidth: '40vw' }}>
-              <h2 style={{ fontSize: '3rem' }}>09. Sticky Horizontal Scroll</h2>
+              <h3 style={{ fontSize: '3rem' }}>09. Sticky Horizontal Scroll</h3>
               <p style={{ color: 'var(--secondary)', fontSize: '1.2rem' }}>Scroll down to move left and right through horizontal content.</p>
             </div>
             {[1, 2, 3, 4].map(i => (
               <div key={i} className="glass-panel" style={{ minWidth: '400px', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <h3 style={{ fontSize: '2rem' }}>Card {i}</h3>
+                <h4 style={{ fontSize: '2rem' }}>Process Step {i}</h4>
               </div>
             ))}
           </motion.div>
@@ -197,13 +191,13 @@ export default function AnimationsDemo() {
       </section>
 
       {/* 10. Background Color Transition */}
-      <motion.section ref={bgRef} style={{ backgroundColor, padding: '8rem 0', transition: 'background-color 0.5s ease' }}>
+      <motion.section ref={bgRef} style={{ backgroundColor, padding: '8rem 0', transition: 'background-color 0.5s ease', borderBottom: '1px solid var(--border)' }}>
         <div className="container text-center">
-          <h2 style={{ fontSize: '3rem', marginBottom: '1rem' }}>10. Dynamic Background</h2>
+          <h3 style={{ fontSize: '3rem', marginBottom: '1rem' }}>10. Dynamic Background</h3>
           <p style={{ color: 'var(--secondary)', fontSize: '1.2rem' }}>Background changes color as you scroll through this section.</p>
         </div>
       </motion.section>
 
-    </main>
+    </div>
   );
 }

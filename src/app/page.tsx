@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Navigation from '@/components/Navigation';
 import AIAssistant from '@/components/AIAssistant';
 import AnimationDemos from '@/components/AnimationDemos';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -125,7 +126,14 @@ export default function Home() {
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
             
-            <div className="glass-panel" style={{ transition: 'transform 0.3s ease', cursor: 'pointer' }}>
+            <motion.div 
+              initial={{ opacity: 0, rotateX: -90 }}
+              whileInView={{ opacity: 1, rotateX: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+              className="glass-panel" 
+              style={{ perspective: '1000px', transformOrigin: 'top', cursor: 'pointer' }}
+            >
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>01</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Website Development</h3>
               <p style={{ color: 'var(--secondary)', marginBottom: '1.5rem' }}>Build modern, scalable digital experiences from frontend to backend.</p>
@@ -136,9 +144,16 @@ export default function Home() {
                 <li>API Integration</li>
               </ul>
               <div style={{ marginTop: '2rem', color: 'var(--accent)', fontWeight: 600 }}>Explore Website Development →</div>
-            </div>
+            </motion.div>
 
-            <div className="glass-panel" style={{ transition: 'transform 0.3s ease', cursor: 'pointer' }}>
+            <motion.div 
+              initial={{ opacity: 0, rotateX: -90 }}
+              whileInView={{ opacity: 1, rotateX: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              className="glass-panel" 
+              style={{ perspective: '1000px', transformOrigin: 'top', cursor: 'pointer' }}
+            >
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>02</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>UI/UX Design & Redesign</h3>
               <p style={{ color: 'var(--secondary)', marginBottom: '1.5rem' }}>Transform outdated websites into modern digital experiences.</p>
@@ -148,9 +163,16 @@ export default function Home() {
                 <li>Responsive Design</li>
                 <li>Website Redesign</li>
               </ul>
-            </div>
+            </motion.div>
 
-            <div className="glass-panel" style={{ transition: 'transform 0.3s ease', cursor: 'pointer' }}>
+            <motion.div 
+              initial={{ opacity: 0, rotateX: -90 }}
+              whileInView={{ opacity: 1, rotateX: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+              className="glass-panel" 
+              style={{ perspective: '1000px', transformOrigin: 'top', cursor: 'pointer' }}
+            >
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>03</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>AI Integration</h3>
               <p style={{ color: 'var(--secondary)', marginBottom: '1.5rem' }}>Bring AI into existing business systems seamlessly.</p>
@@ -160,9 +182,16 @@ export default function Home() {
                 <li>AI Content Systems</li>
                 <li>AI API Integration</li>
               </ul>
-            </div>
+            </motion.div>
 
-            <div className="glass-panel" style={{ transition: 'transform 0.3s ease', cursor: 'pointer' }}>
+            <motion.div 
+              initial={{ opacity: 0, rotateX: -90 }}
+              whileInView={{ opacity: 1, rotateX: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              className="glass-panel" 
+              style={{ perspective: '1000px', transformOrigin: 'top', cursor: 'pointer' }}
+            >
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>04</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>AI Agents & Automation</h3>
               <p style={{ color: 'var(--secondary)', marginBottom: '1.5rem' }}>Create intelligent agents that can perform business tasks.</p>
@@ -172,7 +201,7 @@ export default function Home() {
                 <li>Workflow Automation</li>
                 <li>CRM Automation</li>
               </ul>
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -242,10 +271,17 @@ export default function Home() {
                   { title: "Appointment Agent", desc: "Handles appointment-related conversations and scheduling workflows." },
                   { title: "Operations Agent", desc: "Helps automate repetitive internal processes and organizes data." },
                 ].map((agent, i) => (
-                   <div key={i} style={{ border: '1px solid var(--border)', borderRadius: '24px', padding: '2rem', background: 'rgba(255,255,255,0.02)' }}>
+                   <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, rotateX: -90 }}
+                      whileInView={{ opacity: 1, rotateX: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: i * 0.1 }}
+                      style={{ perspective: '1000px', transformOrigin: 'top', border: '1px solid var(--border)', borderRadius: '24px', padding: '2rem', background: 'rgba(255,255,255,0.02)' }}
+                   >
                       <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>{agent.title}</h3>
                       <p style={{ color: 'var(--secondary)', fontSize: '0.95rem' }}>{agent.desc}</p>
-                   </div>
+                   </motion.div>
                 ))}
             </div>
             

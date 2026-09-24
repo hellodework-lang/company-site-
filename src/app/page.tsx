@@ -1,10 +1,20 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import AIAssistant from '@/components/AIAssistant';
 
 export default function Home() {
+  const [navHeight, setNavHeight] = useState(80);
+  useEffect(() => {
+    const nav = document.querySelector('nav');
+    if (nav) {
+      setNavHeight(nav.offsetHeight);
+      const resizeObserver = new ResizeObserver(() => setNavHeight(nav.offsetHeight));
+      resizeObserver.observe(nav);
+      return () => resizeObserver.disconnect();
+    }
+  }, []);
   const { scrollYProgress } = useScroll();
 
   // 1. Cinematic Text Reveal
@@ -146,7 +156,7 @@ export default function Home() {
 
       {/* 5. HORIZONTAL DIGITAL JOURNEY */}
       <section ref={horizontalRef} style={{ height: '400vh', position: 'relative', borderTop: '1px solid var(--border)' }}>
-        <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ position: 'sticky', top: navHeight, height: `calc(100vh - ${navHeight}px)`, overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div style={{ padding: '0 10vw', marginBottom: '4rem' }}>
              <h2 style={{ fontSize: '3rem' }}>From idea to intelligent system.</h2>
           </div>
